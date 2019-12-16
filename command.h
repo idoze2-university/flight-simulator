@@ -4,7 +4,6 @@
 #include <thread>
 using namespace std;
 //---Class Labels--------------------------------------------------------------------------------//
-class Parser;
 class Command;
 //----Command Strings----------------------------------------------------------------------------//
 #define OpenDataServerStr "openDataServer"
@@ -21,18 +20,10 @@ int varcmd(string);
 int printcmd(string);
 int sleepcmd(string);
 int whilecmd(string);
-//int connectControlClient(string);
+map<const char *, Command> getCommandToStrMap();
+
 //TO DO: Continue working on parser.
 //----Class Implementations----------------------------------------------------------------------//
-class Parser
-{
-    FILE *fp;
-
-public:
-    Parser() {}
-    Parser(FILE *fileptr) : fp(fileptr) {}
-    ~Parser() {}
-};
 
 class Command
 {

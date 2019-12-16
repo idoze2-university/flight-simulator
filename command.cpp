@@ -11,18 +11,21 @@ int main(int argc, char *argv[])
         cerr << "Please provide a file name for commands file." << endl;
         return 1;
     }
-    //------Create Parser------------------------------------------------------------------------//
-    Parser parser = Parser(fp);
     //------lex-Parse commands file--------------------------------------------------------------//
-    map<const char *, Command> command_parser;
-    command_parser.emplace(OpenDataServerStr, Command(openDataServer));
-    command_parser.emplace(ConnectControlClientStr, Command(connectControlClient));
-    command_parser.emplace(VarStr, Command(varcmd));
-    command_parser.emplace(PrintStr, Command(printcmd));
-    command_parser.emplace(SleepStr, Command(sleepcmd));
-    command_parser.emplace(WhileStr, Command(whilecmd));
+
     //TODO: complete writing command methods.
     //------Free Memory--------------------------------------------------------------------------//
+}
+map<const char *, Command> getCommandToStrMap()
+{
+    map<const char *, Command> cmdMap;
+    cmdMap.emplace(OpenDataServerStr, Command(openDataServer));
+    cmdMap.emplace(ConnectControlClientStr, Command(connectControlClient));
+    cmdMap.emplace(VarStr, Command(varcmd));
+    cmdMap.emplace(PrintStr, Command(printcmd));
+    cmdMap.emplace(SleepStr, Command(sleepcmd));
+    cmdMap.emplace(WhileStr, Command(whilecmd));
+    return cmdMap;
 }
 
 int openDataServer(string arg)

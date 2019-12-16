@@ -26,6 +26,6 @@ int main(int argc, char *argv[])
 int openDataServer(string arg)
 {
     int port = stoi(arg);
-    port = port;
+    port = port;//TO DO: Continue working on openDataServer.
     return 1;
 }

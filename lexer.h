@@ -1,16 +1,21 @@
 #include <string>
 #include <map>
-#include "iostream"
+#include <iostream>
+#include <thread>
 using namespace std;
 
-//Command Strings
-
+//----Command Strings----------------------------------------------------------------------------//
 #define OpenDataServerStr "openDataServer"
+#define ConnectControlClientStr "connectControlClient"
+#define VarStr "var"
+#define PrintStr "Print"
+#define SleepStr "Sleep"
+#define WhileStr "while"
 
-//Command Function Labels
-
-//Command *getCommands(char *);
+//----Command Function Labels--------------------------------------------------------------------//
 int openDataServer(string);
+//int connectControlClient(string);
+//TO DO: Continue working on lexer.
 
 class Command
 {
@@ -18,7 +23,7 @@ class Command
 
 public:
     int execute(string arg) { return (method)(arg); };
-    Command() {}
+    Command() {} // Default Ctor
     Command(int (*meth)(string)) : method(meth) {}
     ~Command() {}
 };

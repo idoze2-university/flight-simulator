@@ -3,7 +3,9 @@
 #include <iostream>
 #include <thread>
 using namespace std;
-
+//---Class Labels--------------------------------------------------------------------------------//
+class Parser;
+class Command;
 //----Command Strings----------------------------------------------------------------------------//
 #define OpenDataServerStr "openDataServer"
 #define ConnectControlClientStr "connectControlClient"
@@ -11,11 +13,26 @@ using namespace std;
 #define PrintStr "Print"
 #define SleepStr "Sleep"
 #define WhileStr "while"
-
+//----Assisting Functions------------------------------------------------------------------------//
 //----Command Function Labels--------------------------------------------------------------------//
 int openDataServer(string);
+int connectControlClient(string);
+int varcmd(string);
+int printcmd(string);
+int sleepcmd(string);
+int whilecmd(string);
 //int connectControlClient(string);
-//TO DO: Continue working on lexer.
+//TO DO: Continue working on parser.
+//----Class Implementations----------------------------------------------------------------------//
+class Parser
+{
+    FILE *fp;
+
+public:
+    Parser() {}
+    Parser(FILE *fileptr) : fp(fileptr) {}
+    ~Parser() {}
+};
 
 class Command
 {

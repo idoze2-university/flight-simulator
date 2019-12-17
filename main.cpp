@@ -1,25 +1,35 @@
-#include "command.cpp"
+#include "command.h"
 #include "parser.h"
+#include "lexer.h"
 
-int main(int argc, char *argv[])
+int main()
 {
-    map<const char *, pair<Command, int>> cmdMap = getCommandToStrMap();
-    string args[] = {""};
-    cmdMap[OpenDataServerStr].first.execute(args);
-    //------Open the file from argv[1]-----------------------------------------------------------//
-    FILE *fp;
-    if (argc > 1)
-        fp = fopen(argv[1], "r");
-    else //Make sure an argument is provided.
+    // //------Open the file from argv[1]-----------------------------------------------------------//
+    // FILE *fp;
+    // if (argc > 1)
+    //     fp = fopen(argv[1], "r");
+    // else //Make sure an argument is provided.
+    // {
+    //     cerr << "Please provide a file name for commands file." << endl;
+    // }
+    //-----Run program from file-----------------------------------------------------------------//
+    list<list<string>> data;
+    //data = Lexer::lex(fp);
+    list<string> open;
+    open.push_back(Command::OpenDataServerStr);
+    open.push_back("5400");
+    data.push_back(open);
+    auto program = Parser::parse(data);
+    for (auto p : program)
     {
-        cerr << "Please provide a file name for commands file." << endl;
-        return 1;
+        auto comm = p.first;
+        string *args = new string[p.second.size()];
+        copy(p.second.begin(), p.second.end(), args);
+        comm.execute(args);
     }
-    Parser c = Parser(fp);
-    fclose(fp);
-    //error
-    //------lex-Parse commands file--------------------------------------------------------------//
+    //------Free Memory--------------------------------------------------------------------------//
+    //fclose(fp);
 
     //TODO: complete writing command methods.
-    //------Free Memory--------------------------------------------------------------------------//
+    return 1;
 }

@@ -1,47 +1,52 @@
+#ifndef COMMAND_H
+#define COMMAND_H
 #include <string>
 #include <map>
 #include <iostream>
-#include <sys/socket.h>
-#include <thread>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 using namespace std;
 //---Class Labels--------------------------------------------------------------------------------//
 class Command;
 //----Definitions--------------------------------------------------------------------------------//
 #define DEF_PORT 5400
-#define DEF_IP_ADDR "127.0.0.1"
-//----Command Strings----------------------------------------------------------------------------//
-#define OpenDataServerStr "openDataServer"
-#define ConnectControlClientStr "connectControlClient"
-#define VarMethStr "var"
-#define PrintMethStr "Print"
-#define SleepMethStr "Sleep"
-#define WhileMethStr "while"
-//-----Command Argument Count--------------------------------------------------------------------//
-#define ARGC_OpenDataServer 1
-#define ARGC_ConnectControlClient 0
+//Command Strings
+//Command Argument Count
+#define ARGC_OpenDataServer 1       //Port
+#define ARGC_ConnectControlClient 2 //IP,Port
+#define ARGC_VarMeth 2              //Hook direction (->/<-),Value
+#define ARGC_PrintMeth 1            //Data
+#define ARGC_SleepMeth 1            //Time
+#define ARGC_While 0                //Condition+function(could be anything)
 //----Global Vars--------------------------------------------------------------------------------//
 
-//----Assisting Functions------------------------------------------------------------------------//
-map<const char *, pair<Command, int>> getCommandToStrMap();
+//----Static Function Labels---------------------------------------------------------------------//
+//Assisting Functions
 void serverListen(int, int);
-//----Command Function Labels--------------------------------------------------------------------//
-int OpenDataServer(string[]);
-int ConnectControlClient(string[]);
-int VarMeth(string[]);
-int PrintMeth(string[]);
-int SleepMeth(string[]);
-int WhileMeth(string[]);
+//Command Function Labels
 //----Class Implementations----------------------------------------------------------------------//
 class Command
 {
     int (*method)(string[]);
 
 public:
+    //--Consts
+    static const string OpenDataServerStr;
+    static const string ConnectControlClientStr;
+    // static const string VarMethStr;
+    // static const string PrintMethStr;
+    // static const string SleepMethStr;
+    // static const string WhileMethStr;
+    // static const string IfMethStr;
+    //--Method labels
+    static int OpenDataServer(string[]);
+    static int ConnectControlClient(string[]);
+    // static int VarMeth(string[]);
+    // static int PrintMeth(string[]);
+    // static int SleepMeth(string[]);
+    // static int WhileMeth(string[]);
+    // static int IfMeth(string[]);
     int execute(string args[]) { return (method)(args); };
-    Command() {} // Default Ctor
+    Command() {} // Default Ctor, not used.
     Command(int (*meth)(string[])) : method(meth) {}
     ~Command() {}
 };
+#endif

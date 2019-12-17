@@ -1,6 +1,4 @@
 #include <iostream>
-#include "command.h"
-
 class Parser
 {
     FILE *fp;

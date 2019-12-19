@@ -13,21 +13,31 @@ FG_ARG_SOCKET_OUT=--telnet=socket,in,10,$(SERVER_IP),$(OUT_PORT),tcp
 FG_ARGS=$(FG_ARG_SOCKET_IN) $(FG_ARG_SOCKET_OUT)
 FG_ARGS_MINI=$(shell /bin/cat flag_mini.txt)
 
-OUTFILE= a.out
+OUTFILE_MAIN= a.out
+OUTFILE_LEXER=lexer.out
+OUTFILES=*.out
 COMPILER=g++
 COMPILER_ARGS= -ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
+TARGET_FILE_MAIN=main.cpp
+TARGET_FILE_LEXER=lexer_main.cpp
 TARGET_FILES=*.cpp
 
 clean:
-	@rm -f $(OUTFILE)
+	@rm -f $(OUTFILES)
 
-compile:
-	@$(COMPILER) $(TARGET_FILES) $(COMPILER_ARGS) -o $(OUTFILE) ${COMPILER_EXTRA_ARGS}
+compile_main:
+	@$(COMPILER) $(TARGET_FILE_MAIN) $(COMPILER_ARGS) -o $(OUTFILE_MAIN) ${COMPILER_EXTRA_ARGS}
 
 run_main:
-	@./$(OUTFILE) $(file)
+	@./$(OUTFILE_MAIN) $(file)
 
-run: compile run_main clean
+run: compile_main run_main clean
+
+compile_lexer:
+	@$(COMPILER) $(TARGET_FILE_LEXER) $(COMPILER_ARGS) -o $(OUTFILE_LEXER) ${COMPILER_EXTRA_ARGS}
+
+run_lexer: compile_lexer
+	@./$(OUTFILE_LEXER) $(file)
 
 copy_protocol:
 	cp $(PROTOCOL_FILENAME_NOEX).xml $(FG_PATH)/Protocol/

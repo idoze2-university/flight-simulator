@@ -4,7 +4,7 @@
 DB::DB()
 {
     _command_names[Command::OpenDataServerStr] = Command(Command::OpenDataServer);
-    _command_names[Command::ConnectControlClientStr] = Command(Command::ConnectControlClient);
+    //_command_names[Command::ConnectControlClientStr] = Command(Command::ConnectControlClient);
     // _command_names[Command::VarMethStr] = Command(VarMeth);
     // _command_names[Command::PrintMethStr] = Command(PrintMeth);
     // _command_names[Command::SleepMethStr] = Command(SleepMeth);

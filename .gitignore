@@ -1,3 +1,4 @@
-.idea/
 project.pdf
-.vscode/*
+.vscode/launch.json
+.vscode/settings.json
+lexer.out

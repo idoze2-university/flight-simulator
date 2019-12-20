@@ -2,6 +2,7 @@
 #define COMMAND_H
 #include <string>
 #include <map>
+#include <memory>
 #include <iostream>
 using namespace std;
 //---Class Labels--------------------------------------------------------------------------------//
@@ -28,6 +29,7 @@ class Command
     int (*method)(string[]);
 
 public:
+    Command() {} // Default Ctor, not used.
     //--Consts
     static const string OpenDataServerStr;
     static const string ConnectControlClientStr;
@@ -45,7 +47,6 @@ public:
     // static int WhileMeth(string[]);
     // static int IfMeth(string[]);
     int execute(string args[]) { return (method)(args); };
-    Command() {} // Default Ctor, not used.
     Command(int (*meth)(string[])) : method(meth) {}
     ~Command() {}
 };

@@ -7,7 +7,6 @@
 #include <arpa/inet.h>
 #include "command.h"
 
-const string Command::OpenDataServerStr = "openDataServer";
 int Command::OpenDataServer(string args[])
 {
     int port;

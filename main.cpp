@@ -1,6 +1,5 @@
 #include "command.h"
 #include "parser.h"
-#include "lexer.h"
 
 int main()
 {

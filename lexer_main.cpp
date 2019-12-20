@@ -10,5 +10,6 @@ int main()
     }
     Lexer::lex(fp);
     fclose(fp);
+    return 0;
 }
 #endif

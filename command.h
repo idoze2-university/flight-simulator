@@ -27,14 +27,9 @@ void serverListen(int, int);
 class Command
 {
     int (*method)(string[]);
-    Command() {} // Default Ctor, not used.
 
 public:
-    static std::shared_ptr<Command> getInstance()
-    {
-        static std::shared_ptr<Command> s{new Command};
-        return s;
-    }
+    Command() {} // Default Ctor, not used.
     //--Consts
     static const string OpenDataServerStr;
     static const string ConnectControlClientStr;

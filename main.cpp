@@ -15,7 +15,7 @@ int main()
     list<list<string>> data;
     //data = Lexer::lex(fp);
     list<string> open;
-    open.push_back(Command::getInstance()->OpenDataServerStr);
+    open.push_back(Command::OpenDataServerStr);
     open.push_back("5400");
     data.push_back(open);
     auto program = Parser::parse(data);

@@ -23,7 +23,6 @@ run_simulator_mini:
 	@$(FG) $(FG_ARGS) $(FG_ARGS_MINI)
 
 # Compilation #####################################################################################
-#Compiler Consts
 ifndef file #sets default for 'file' variable.
 override file=fly.txt
 endif
@@ -36,14 +35,14 @@ MAIN_FILES=$(wildcard *main*.cpp)
 SOURCE_FILES=$(filter-out $(MAIN_FILES), $(wildcard *.cpp))
 clean:
 	@rm -f *.out
-
 # Lexer (Allen) ###################################################################################
-LEXER_DEPENDENCIES=#Fill if needed
+_DEPENDENCIES_LEXER=command.cpp
+DEPENDENCIES_LEXER=$(foreach d,$(_DEPENDENCIES_LEXER),$(d).cpp)
 OUTFILE_LEXER=lexer.out
 TARGET_FILE_LEXER=lexer*.cpp
 
 compile_lexer:
-	@$(COMPILER) $(TARGET_FILE_LEXER) $(COMPILER_ARGS) -o $(OUTFILE_LEXER) ${COMPILER_EXTRA_ARGS}
+	@$(COMPILER) $(DEPENDENCIES_LEXER) $(TARGET_FILE_LEXER) $(COMPILER_ARGS) -o $(OUTFILE_LEXER) ${COMPILER_EXTRA_ARGS}
 
 run_lexer:
 	@./$(OUTFILE_LEXER) $(file)
@@ -51,12 +50,14 @@ run_lexer:
 run_l: compile_lexer run_lexer clean
 
 # Main (Ido) ######################################################################################
-MAIN_DEPENDENCIES=command parser
+_DEPENDENCIES_MAIN=command parser DB openServer_command connectControlClient_command
+DEPENDENCIES_MAIN=$(foreach d,$(_DEPENDENCIES_MAIN),$(d).cpp)
+#DEPENDENCIES_MAIN=$(SOURCE_FILES)
 OUTFILE_MAIN= a.out
 TARGET_FILE_MAIN=main.cpp
 
 compile_main:
-	@$(COMPILER) $(TARGET_FILE_MAIN) $(COMPILER_ARGS) -o $(OUTFILE_MAIN) ${COMPILER_EXTRA_ARGS}
+	@$(COMPILER) $(DEPENDENCIES_MAIN) $(TARGET_FILE_MAIN) $(COMPILER_ARGS) -o $(OUTFILE_MAIN) ${COMPILER_EXTRA_ARGS}
 
 run_main:
 	@./$(OUTFILE_MAIN) $(file)

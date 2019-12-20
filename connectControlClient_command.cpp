@@ -6,7 +6,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "command.h"
-const string ConnectControlClientStr = "connectControlClient";
 
 int Command::ConnectControlClient(string args[])
 {
@@ -68,8 +67,8 @@ void serverSend(int client_socket, int loop = 0)
         int valread = 1;
         while (valread > 0)
         {
-            char *hello = "Hi from client";
-            int is_sent = send(client_socket, hello, /*SIZE*/ 0, 0);
+            string hello = "*";
+            int is_sent = send(client_socket, "", /*SIZE*/ 0, 0);
             if (is_sent == -1)
             {
                 std::cout << "Error sending message" << std::endl;

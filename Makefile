@@ -23,7 +23,7 @@ TARGET_FILE_LEXER=lexer*.cpp
 TARGET_FILES=*.cpp
 
 clean:
-	@rm -f *.o
+	@rm -f *.out
 
 compile_main:
 	@$(COMPILER) $(TARGET_FILE_MAIN) $(COMPILER_ARGS) -o $(OUTFILE_MAIN) ${COMPILER_EXTRA_ARGS}

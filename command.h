@@ -31,11 +31,11 @@ public:
     //--Consts
     static const string OpenDataServerStr;
     static const string ConnectControlClientStr;
-    // static const string VarMethStr;
-    // static const string PrintMethStr;
-    // static const string SleepMethStr;
-    // static const string WhileMethStr;
-    // static const string IfMethStr;
+    static const string VarMethStr;
+    static const string PrintMethStr;
+    static const string SleepMethStr;
+    static const string WhileMethStr;
+    static const string IfMethStr;
     //--Method labels
     static int OpenDataServer(string[]);
     static int ConnectControlClient(string[]);

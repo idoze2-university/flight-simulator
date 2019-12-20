@@ -2,7 +2,7 @@
 #include "parser.h"
 #include "lexer.h"
 
-int main()
+int main_old()
 {
     // //------Open the file from argv[1]-----------------------------------------------------------//
     // FILE *fp;

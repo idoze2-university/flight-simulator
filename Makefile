@@ -19,11 +19,11 @@ OUTFILES=*.out
 COMPILER=g++
 COMPILER_ARGS= -ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
 TARGET_FILE_MAIN=main.cpp
-TARGET_FILE_LEXER=lexer_main.cpp
+TARGET_FILE_LEXER=lexer*.cpp
 TARGET_FILES=*.cpp
 
 clean:
-	@rm -f $(OUTFILES)
+	@rm -f *.o
 
 compile_main:
 	@$(COMPILER) $(TARGET_FILE_MAIN) $(COMPILER_ARGS) -o $(OUTFILE_MAIN) ${COMPILER_EXTRA_ARGS}
@@ -34,12 +34,12 @@ run_main:
 run: compile_main run_main clean
 
 compile_lexer:
-	@$(COMPILER) $(TARGET_FILE_LEXER) $(COMPILER_ARGS) -o $(OUTFILE_LEXER) ${COMPILER_EXTRA_ARGS}
+	$(COMPILER) $(TARGET_FILE_LEXER) $(COMPILER_ARGS) -o $(OUTFILE_LEXER) ${COMPILER_EXTRA_ARGS}
 
 run_lexer:
 	@./$(OUTFILE_LEXER) $(file)
 
-run_lexer: compile_lexer run_lexer clean
+run_l: compile_lexer run_lexer clean
 
 copy_protocol:
 	cp $(PROTOCOL_FILENAME_NOEX).xml $(FG_PATH)/Protocol/

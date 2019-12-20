@@ -2,6 +2,7 @@
 #define COMMAND_H
 #include <string>
 #include <map>
+#include <memory>
 #include <iostream>
 using namespace std;
 //---Class Labels--------------------------------------------------------------------------------//
@@ -26,8 +27,14 @@ void serverListen(int, int);
 class Command
 {
     int (*method)(string[]);
+    Command() {} // Default Ctor, not used.
 
 public:
+    static std::shared_ptr<Command> getInstance()
+    {
+        static std::shared_ptr<Command> s{new Command};
+        return s;
+    }
     //--Consts
     static const string OpenDataServerStr;
     static const string ConnectControlClientStr;
@@ -45,7 +52,6 @@ public:
     // static int WhileMeth(string[]);
     // static int IfMeth(string[]);
     int execute(string args[]) { return (method)(args); };
-    Command() {} // Default Ctor, not used.
     Command(int (*meth)(string[])) : method(meth) {}
     ~Command() {}
 };

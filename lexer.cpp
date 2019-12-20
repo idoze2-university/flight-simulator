@@ -15,7 +15,7 @@ list <list<string>> Lexer::lex(FILE *fp) {
         if (line.find("openDataServer") != string::npos) {
             std::string command, argument;
             command = line.substr(0, 14);
-            int start_pos_arg = line.find("(") + 1, end_pos_arg = line.find(")") - 1;
+            int start_pos_arg = line.find("(") + 1, end_pos_arg = line.find(")") - 2;
             argument = line.substr(start_pos_arg, end_pos_arg);
             cout<<argument<<endl;
             lexer_list_node.push_front(argument);

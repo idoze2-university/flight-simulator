@@ -17,12 +17,10 @@ list <list<string>> Lexer::lex(FILE *fp) {
             command = line.substr(0, 14);
             int start_pos_arg = line.find("(") + 1, end_pos_arg = line.find(")") - 1;
             argument = line.substr(start_pos_arg, end_pos_arg);
+            cout<<argument<<endl;
             lexer_list_node.push_front(argument);
             lexer_list_node.push_front(command);
             lexer_list.push_back(lexer_list_node);
-            for (auto i : lexer_list_node) {
-                cout << i << endl;
-            }
         }
         // else if (line.find(Command::ConnectControlClientStr)!=string::npos)
         // {

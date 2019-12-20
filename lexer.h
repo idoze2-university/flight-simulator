@@ -1,6 +1,5 @@
 #ifndef LEXER_H
 #define LEXER_H
-class Command;
 #include <iostream>
 #include <list>
 using namespace std;

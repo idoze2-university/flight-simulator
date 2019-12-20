@@ -1,3 +1,5 @@
 .idea/
 project.pdf
 .vscode/*
+lexer.out
+a.out

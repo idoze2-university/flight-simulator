@@ -1,15 +1,12 @@
-#ifndef LEXER_MAIN_CPP
-#define LEXER_MAIN_CPP
 #include "lexer_main.h"
 int main()
 {
     FILE *fp = fopen("fly.txt", "r");
-    if (fp == NULL)
+    if (fp == nullptr)
     {
-        throw "Error opening file fly.txt";
+        throw "Error opening fly.txt";
     }
     Lexer::lex(fp);
     fclose(fp);
     return 0;
 }
-#endif

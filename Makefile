@@ -36,7 +36,7 @@ SOURCE_FILES=$(filter-out $(MAIN_FILES), $(wildcard *.cpp))
 clean:
 	@rm -f *.out
 # Lexer (Allen) ###################################################################################
-_DEPENDENCIES_LEXER=command.cpp
+_DEPENDENCIES_LEXER=command
 DEPENDENCIES_LEXER=$(foreach d,$(_DEPENDENCIES_LEXER),$(d).cpp)
 OUTFILE_LEXER=lexer.out
 TARGET_FILE_LEXER=lexer*.cpp

@@ -41,7 +41,7 @@ public:
     //--Method labels
     static int OpenDataServer(string[]);
     static int ConnectControlClient(string[]);
-    // static int VarMeth(string[]);
+    static int DefineVar(string[]);
     // static int PrintMeth(string[]);
     // static int SleepMeth(string[]);
     // static int WhileMeth(string[]);

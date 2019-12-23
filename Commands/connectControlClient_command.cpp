@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "command.h"
+#include "../command.h"
 
 int Command::ConnectControlClient(string args[])
 {

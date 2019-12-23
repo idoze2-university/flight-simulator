@@ -3,29 +3,46 @@
 #include "command.h"
 #include <unordered_map>
 #include <memory>
+#include <queue>
 #include <mutex>
 using namespace std;
+#define BUFFER_SIZE 1024
+#define BindRTL "->"
+#define BindLTR "<-"
+#define BindEQ "="
+typedef pair<string, double> updateEntry;
 class DB
 {
     DB();
     unordered_map<string, Command> _command_names;
     unordered_map<string, double> _server_values;
-    // unordered_map<string, string> _symbol_binding;
-    // unordered_map<string, double> _symbol_table;
+    unordered_map<string, double> _symbol_table;
+    unordered_map<string, string> _symbol_binding;
+    queue<updateEntry> _update_queue;
+    void enqueueUpdate(string, double);
+    bool isBound(string);
     mutex global_lock;
 
 public:
-    // DB(DB const &) = delete;
-    // void operator=(DB const &) = delete;
     static std::shared_ptr<DB> getInstance()
     {
         static std::shared_ptr<DB> s{new DB};
         return s;
     }
+    //-- Mutex
     void lockMutex();
     void unlockMutex();
+
+    //-- Getters
     Command getCommand(string);
     double getServerValue(string);
+    double getSymbol(string);
+    string getBinding(string);
+    string getNextUpdateQuery();
+
+    //-- Setters
+    void setSymbol(string, double);
+    void setBinding(string, string);
 };
 
 #endif

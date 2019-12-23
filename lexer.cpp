@@ -30,7 +30,7 @@ bool isDigit(char c)
     return false;
 }
 
-bool isMathToken(char c)
+bool Lexer::isMathToken(char c)
 {
     switch (c)
     {
@@ -53,7 +53,7 @@ bool isMathToken(char c)
     }
 }
 
-bool isBadCharacter(char c, int status)
+bool Lexer::isBadCharacter(char c, int status)
 {
     switch (status)
     {

@@ -252,24 +252,29 @@ void unknownCommand_bad_line(bool flag) {
     flag ? throw e : 0;
 }
 
+void printError(std::string e, int line_counter) {
+    cout << e + " in line " + std::to_string(line_counter) + "\n";
+}
+
 list <list<string>> Lexer::lex(FILE *fp) {
     std::string line;
     char buffer[BUFFER_SIZE];
-    int pos;
+    int pos, line_counter = 0;
     list <list<string>> lexer_list;
     while (!feof(fp)) {
+        line_counter++;
         bool unvalidC_flag = true;
         list <string> lexer_list_node;
         fgets(buffer, BUFFER_SIZE, fp);
         line = strip(buffer);
         if (line == "") {
             unvalidC_flag = false;
-        } else if (line.find("openDataServer") != string::npos) {
+        } else if (line.find(OPEN_DATA_SERVER_STR) != string::npos) {
             unvalidC_flag = false;
             try {
                 openDataServer_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             std::string command, argument;
             pos = line.size();
@@ -278,13 +283,12 @@ list <list<string>> Lexer::lex(FILE *fp) {
             lexer_list_node.push_back(command);
             lexer_list_node.push_back(argument);
             lexer_list.push_back(lexer_list_node);
-            lexer_list.push_back(lexer_list_node);
-        } else if (line.find("connectControlClient") != string::npos) {
+        } else if (line.find(CONNECT_CONTROL_CLIENT_STR) != string::npos) {
             unvalidC_flag = false;
             try {
                 connectControlClient_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             std::string command, argument1, argument2;
             command = line.substr(0, 20);
@@ -297,12 +301,12 @@ list <list<string>> Lexer::lex(FILE *fp) {
             lexer_list_node.push_back(argument1);
             lexer_list_node.push_back(argument2);
             lexer_list.push_back(lexer_list_node);
-        } else if (line.find("var") != string::npos) {
+        } else if (line.find(VAR_STR) != string::npos) {
             unvalidC_flag = false;
             try {
                 var_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             std::string command, name, operation, argument;
             bool assign_to_src, assign_to_dest;
@@ -330,11 +334,11 @@ list <list<string>> Lexer::lex(FILE *fp) {
             lexer_list_node.push_back(operation);
             lexer_list_node.push_back(argument);
             lexer_list.push_back(lexer_list_node);
-        } else if (line.find("Print") != string::npos) {
+        } else if (line.find(PRINT_STR) != string::npos) {
             try {
                 print_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             unvalidC_flag = false;
             std::string command, argument;
@@ -343,11 +347,11 @@ list <list<string>> Lexer::lex(FILE *fp) {
             lexer_list_node.push_back(command);
             lexer_list_node.push_back(argument);
             lexer_list.push_back(lexer_list_node);
-        } else if (line.find("Sleep") != string::npos) {
+        } else if (line.find(SLEEP_STR) != string::npos) {
             try {
                 sleep_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             unvalidC_flag = false;
             std::string command, argument;
@@ -356,11 +360,11 @@ list <list<string>> Lexer::lex(FILE *fp) {
             lexer_list_node.push_back(command);
             lexer_list_node.push_back(argument);
             lexer_list.push_back(lexer_list_node);
-        } else if (line.find("if") != string::npos) {
+        } else if (line.find(IF_STR) != string::npos) {
             try {
                 if_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             unvalidC_flag = false;
             std::string command, condition, has_bracet_flag = "0", go_forward = "0";
@@ -371,11 +375,11 @@ list <list<string>> Lexer::lex(FILE *fp) {
             lexer_list_node.push_back(has_bracet_flag);
             lexer_list_node.push_back(go_forward);
             lexer_list.push_back(lexer_list_node);
-        } else if (line.find("while") != string::npos) {
+        } else if (line.find(WHILE_STR) != string::npos) {
             try {
                 while_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             unvalidC_flag = false;
             std::string command, condition, has_bracet_flag = "0", go_forward = "0";
@@ -386,11 +390,11 @@ list <list<string>> Lexer::lex(FILE *fp) {
             lexer_list_node.push_back(has_bracet_flag);
             lexer_list_node.push_back(go_forward);
             lexer_list.push_back(lexer_list_node);
-        } else if (line.find("}") != string::npos) {
+        } else if (line.find(CLOSE_BRACKET_STR) != string::npos) {
             try {
                 closeCondition_bad_line(line);
             } catch (string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             unvalidC_flag = false;
             int move_counter = 0;
@@ -421,7 +425,7 @@ list <list<string>> Lexer::lex(FILE *fp) {
                     throw e;
                 }
             } catch (std::string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             std::string command = "}", go_back = std::to_string(move_counter);
             lexer_list_node.push_back(command);
@@ -447,7 +451,7 @@ list <list<string>> Lexer::lex(FILE *fp) {
                     }
                 }
             } catch (std::string e) {
-                cout << e << endl;
+                printError(e, line_counter);
             }
             lexer_list_node.push_back(dest);
             lexer_list_node.push_back(src);
@@ -456,8 +460,161 @@ list <list<string>> Lexer::lex(FILE *fp) {
         try {
             unknownCommand_bad_line(unvalidC_flag);
         } catch (string e) {
-            cout << e << endl;
+            printError(e, line_counter);
         }
     }
     return lexer_list;
+}
+
+list <string> Lexer::lex(std::string s) {
+    int pos;
+    int line_counter = 0;
+    bool unvalidC_flag = true;
+    list <string> lexer_list_node;
+    std::string line = strip(s);
+    if (line == "") {
+        unvalidC_flag = false;
+    } else if (line.find(OPEN_DATA_SERVER_STR) != string::npos) {
+        unvalidC_flag = false;
+        try {
+            openDataServer_bad_line(line);
+        } catch (string e) {
+            printError(e, line_counter);
+        }
+        std::string command, argument;
+        pos = line.size();
+        command = line.substr(0, 14);
+        argument = line.substr(15, pos - 16);
+        lexer_list_node.push_back(command);
+        lexer_list_node.push_back(argument);
+    } else if (line.find(CONNECT_CONTROL_CLIENT_STR) != string::npos) {
+        unvalidC_flag = false;
+        try {
+            connectControlClient_bad_line(line);
+        } catch (string e) {
+            printError(e, line_counter);
+        }
+        std::string command, argument1, argument2;
+        command = line.substr(0, 20);
+        pos = line.find(",");
+        int end_pos_arg1 = pos - 1;
+        int start_pos_arg2 = pos + 1, end_pos_arg2 = line.size();
+        argument1 = line.substr(22, end_pos_arg1 - 22);
+        argument2 = line.substr(start_pos_arg2, end_pos_arg2 - start_pos_arg2 - 1);
+        lexer_list_node.push_back(command);
+        lexer_list_node.push_back(argument1);
+    } else if (line.find(VAR_STR) != string::npos) {
+        unvalidC_flag = false;
+        try {
+            var_bad_line(line);
+        } catch (string e) {
+            printError(e, line_counter);
+        }
+        std::string command, name, operation, argument;
+        bool assign_to_src, assign_to_dest;
+        line.find("<-") != string::npos ? assign_to_src = true : assign_to_src = false;
+        line.find("->") != string::npos ? assign_to_dest = true : assign_to_dest = false;
+        command = line.substr(0, 3);
+        if (assign_to_dest) {
+            pos = line.find("-");
+            name = line.substr(3, pos - 3);
+            operation = "->";
+            argument = line.substr(pos + 2, line.size());
+        } else if (assign_to_src) {
+            pos = line.find("<");
+            name = line.substr(3, pos - 3);
+            operation = "<-";
+            argument = line.substr(pos + 2, line.size());
+        } else {
+            pos = line.find("=");
+            name = line.substr(3, pos - 3);
+            operation = "=";
+            argument = line.substr(pos + 1, line.size());
+        }
+        lexer_list_node.push_back(command);
+        lexer_list_node.push_back(name);
+        lexer_list_node.push_back(operation);
+        lexer_list_node.push_back(argument);
+    } else if (line.find(PRINT_STR) != string::npos) {
+        try {
+            print_bad_line(line);
+        } catch (string e) {
+            printError(e, line_counter);
+        }
+        unvalidC_flag = false;
+        std::string command, argument;
+        command = line.substr(0, 5);
+        argument = line.substr(6, line.size() - 7);
+        lexer_list_node.push_back(command);
+        lexer_list_node.push_back(argument);
+    } else if (line.find(SLEEP_STR) != string::npos) {
+        try {
+            sleep_bad_line(line);
+        } catch (string e) {
+            printError(e, line_counter);
+        }
+        unvalidC_flag = false;
+        std::string command, argument;
+        command = line.substr(0, 5);
+        argument = line.substr(6, line.size() - 7);
+        lexer_list_node.push_back(command);
+        lexer_list_node.push_back(argument);
+    } else if (line.find(IF_STR) != string::npos) {
+        try {
+            if_bad_line(line);
+        } catch (string e) {
+            printError(e, line_counter);
+        }
+        unvalidC_flag = false;
+        std::string command, condition, has_bracet_flag = "0", go_forward = "0";
+        command = "if";
+        condition = line.substr(2, line.size() - 3);
+        lexer_list_node.push_back(command);
+        lexer_list_node.push_back(condition);
+        lexer_list_node.push_back(has_bracet_flag);
+        lexer_list_node.push_back(go_forward);
+    } else if (line.find(WHILE_STR) != string::npos) {
+        try {
+            while_bad_line(line);
+        } catch (string e) {
+            printError(e, line_counter);
+        }
+        unvalidC_flag = false;
+        std::string command, condition, has_bracet_flag = "0", go_forward = "0";
+        command = "while";
+        condition = line.substr(5, line.size() - 6);
+        lexer_list_node.push_back(command);
+        lexer_list_node.push_back(condition);
+        lexer_list_node.push_back(has_bracet_flag);
+        lexer_list_node.push_back(go_forward);
+    } else if (line.find("=") != string::npos) {
+        unvalidC_flag = false;
+        std::string src, dest;
+        pos = line.find("=");
+        dest = line.substr(0, pos);
+        src = line.substr(pos + 1, line.size());
+        try {
+            std::string e = "Bad assigning";
+            for (char c: dest) {
+                if (isBadCharacter(c, 2)) {
+                    throw e;
+                }
+            }
+            for (char c: src) {
+                if (isBadCharacter(c, 2)) {
+                    throw e;
+                }
+            }
+        } catch (std::string e) {
+            printError(e, line_counter);
+        }
+        lexer_list_node.push_back(dest);
+        lexer_list_node.push_back(src);
+    }
+    try {
+        unknownCommand_bad_line(unvalidC_flag);
+    } catch (string e) {
+        printError(e, line_counter);
+    }
+    return lexer_list_node;
 }

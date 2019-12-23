@@ -6,7 +6,7 @@ int main()
     {
         throw "Error opening fly.txt";
     }
-    Lexer::lex(fp);
+    list<list<string>> lexer_list = Lexer::lex(fp);
     fclose(fp);
     return 0;
 }

@@ -4,11 +4,11 @@
 
 //Set method names.
 const string Command::OpenDataServerStr = "openDataServer";
-const string ConnectControlClientStr = "connectControlClient";
-const string PrintMethStr = "Print";
-const string VarMethStr = "var";
-const string SleepMethStr = "Sleep";
-const string WhileMethStr = "while";
-const string IfMethStr = "if";
+const string Command::ConnectControlClientStr = "connectControlClient";
+const string Command::PrintMethStr = "Print";
+const string Command::VarMethStr = "var";
+const string Command::SleepMethStr = "Sleep";
+const string Command::WhileMethStr = "while";
+const string Command::IfMethStr = "if";
 
 #endif

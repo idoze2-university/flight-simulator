@@ -2,3 +2,6 @@ project.pdf
 .vscode/launch.json
 .vscode/settings.json
 lexer.out
+/cmake-build-debug/
+.gitignore
+a.out

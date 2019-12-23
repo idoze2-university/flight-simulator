@@ -53,7 +53,7 @@ bool Lexer::isMathToken(char c)
     }
 }
 
-bool Lexer::Lexer::isBadCharacter(char c, int status)
+bool Lexer::isBadCharacter(char c, int status)
 {
     switch (status)
     {

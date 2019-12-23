@@ -1,6 +1,6 @@
 #ifndef LEXER_H
 #define LEXER_H
-class Command;
+#define BUFFER_SIZE 1024
 #include <iostream>
 #include <list>
 using namespace std;

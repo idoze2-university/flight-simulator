@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/a.out",
             "args": [
-                "fly.txt"
+                "Project_Data/fly.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",

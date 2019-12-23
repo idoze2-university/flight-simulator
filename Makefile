@@ -47,7 +47,21 @@ compile_lexer:
 run_lexer:
 	@./$(OUTFILE_LEXER) $(file)
 
-run_l: compile_lexer run_lexer clean
+test_lexer: compile_lexer run_lexer clean
+
+# Parser (Allen, Ido) #############################################################################
+_DEPENDENCIES_PARSER=command lexer DB *_command
+DEPENDENCIES_PARSER=$(foreach d,$(_DEPENDENCIES_PARSER),$(d).cpp)
+OUTFILE_PARSER=parser.out
+TARGET_FILE_PARSER=parser*.cpp
+
+compile_parser:
+	@$(COMPILER) $(DEPENDENCIES_PARSER) $(TARGET_FILE_PARSER) $(COMPILER_ARGS) -o $(OUTFILE_PARSER) ${COMPILER_EXTRA_ARGS}
+
+run_parser:
+	@./$(OUTFILE_PARSER) $(file)
+
+test_parser: compile_parser run_parser clean
 
 # Main (Ido) ######################################################################################
 _DEPENDENCIES_MAIN=command parser DB openServer_command connectControlClient_command
@@ -62,7 +76,7 @@ compile_main:
 run_main:
 	@./$(OUTFILE_MAIN) $(file)
 
-run: compile_main run_main clean
+test_main: compile_main run_main clean
 
 
 

@@ -22,17 +22,4 @@ list<pair<Command, list<string>>> Parser::parse(list<list<string>> lexer_output)
     }
     return ret;
 }
-
-double Parser::parseValue(string expression)
-{
-    try
-    {
-        return stoi(expression);
-    }
-    catch (const std::exception &e)
-    {
-        cout << "Cannot evaluate \'" << expression << "\'" << endl;
-        return 0;
-    }
-}
 #endif

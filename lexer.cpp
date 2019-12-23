@@ -53,7 +53,7 @@ bool Lexer::isMathToken(char c)
     }
 }
 
-bool Lexer::isBadCharacter(char c, int status)
+bool Lexer::Lexer::isBadCharacter(char c, int status)
 {
     switch (status)
     {
@@ -90,7 +90,7 @@ std::string strip(std::string line)
     std::string s = "";
     for (char c : line)
     {
-        if (isBadCharacter(c, 0) && !s_flag)
+        if (Lexer::isBadCharacter(c, 0) && !s_flag)
         {
             continue;
         }
@@ -171,7 +171,7 @@ void var_bad_line(std::string line)
         for (; i < pos; i++)
         {
             c = line[i];
-            if (isBadCharacter(c, 1))
+            if (Lexer::isBadCharacter(c, 1))
             {
                 throw e;
             }
@@ -204,7 +204,7 @@ void var_bad_line(std::string line)
         for (; i < pos; i++)
         {
             c = line[i];
-            if (isBadCharacter(c, 1))
+            if (Lexer::isBadCharacter(c, 1))
             {
                 throw e;
             }
@@ -237,7 +237,7 @@ void var_bad_line(std::string line)
         for (; i < pos; i++)
         {
             c = line[i];
-            if (isBadCharacter(c, 1))
+            if (Lexer::isBadCharacter(c, 1))
             {
                 throw e;
             }
@@ -250,7 +250,7 @@ void var_bad_line(std::string line)
         string argument = line.substr(pos + 1, line.size());
         for (char ch : argument)
         {
-            if (isBadCharacter(ch, 1))
+            if (Lexer::isBadCharacter(ch, 1))
             {
                 throw e;
             }
@@ -604,14 +604,14 @@ list<list<string>> Lexer::lex(FILE *fp)
                 std::string e = "Bad assigning";
                 for (char c : dest)
                 {
-                    if (isBadCharacter(c, 2))
+                    if (Lexer::isBadCharacter(c, 2))
                     {
                         throw e;
                     }
                 }
                 for (char c : src)
                 {
-                    if (isBadCharacter(c, 2))
+                    if (Lexer::isBadCharacter(c, 2))
                     {
                         throw e;
                     }
@@ -813,14 +813,14 @@ list<string> Lexer::lex(std::string s)
             std::string e = "Bad assigning";
             for (char c : dest)
             {
-                if (isBadCharacter(c, 2))
+                if (Lexer::isBadCharacter(c, 2))
                 {
                     throw e;
                 }
             }
             for (char c : src)
             {
-                if (isBadCharacter(c, 2))
+                if (Lexer::isBadCharacter(c, 2))
                 {
                     throw e;
                 }

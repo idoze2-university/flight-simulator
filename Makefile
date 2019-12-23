@@ -50,7 +50,7 @@ run_lexer:
 test_lexer: compile_lexer run_lexer clean
 
 # Parser (Allen, Ido) #############################################################################
-_DEPENDENCIES_PARSER=parser command lexer DB Commands/*
+_DEPENDENCIES_PARSER=parser parse_value command lexer DB Commands/*
 DEPENDENCIES_PARSER=$(foreach d,$(_DEPENDENCIES_PARSER),$(d).cpp)
 OUTFILE_PARSER=parser.out
 TARGET_FILE_PARSER=parser_main.cpp

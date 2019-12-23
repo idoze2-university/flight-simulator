@@ -52,6 +52,4 @@ while alt < 1000 {
 	elevator = pitch / 50
 	Sleep(250)
 }
-if a{
-}
 Print("done")

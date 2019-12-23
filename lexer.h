@@ -23,7 +23,8 @@ class Lexer
 {
 public:
     static list<list<string>> lex(FILE *);
-
+    static bool isBadCharacter(char, int);
+    static bool isMathToken(char);
     static list<string> lex(std::string);
 };
 

@@ -12,7 +12,7 @@ int Command::PrintMeth(string args[])
     catch (const std::exception &e)
     {
     }
-
+    arg.erase(remove(arg.begin(), arg.end(), '\"'), arg.end());
     cout << arg << endl;
     return 0;
 }

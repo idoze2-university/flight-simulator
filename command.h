@@ -45,7 +45,7 @@ public:
     static int PrintMeth(string[]);
     static int SleepMeth(string[]);
     static int WhileMeth(string[]);
-    // static int IfMeth(string[]);
+    static int IfMeth(string[]);
     int execute(string args[]) { return (method)(args); };
     Command(int (*meth)(string[])) : method(meth) {}
     ~Command() {}

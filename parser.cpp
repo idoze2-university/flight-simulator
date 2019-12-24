@@ -3,41 +3,46 @@
 #include "parser.h"
 list<pair<Command, list<string>>> Parser::parse(list<list<string>> lexer_output)
 {
-    int inWhile = 0;
+    int inScope = 0;
     auto ret = list<pair<Command, list<string>>>();
     for (auto entry : lexer_output)
     {
-        if (entry.size() == 0)
+        auto _command_name = entry.front();
+        if (_command_name == CLOSE_BRACKET_STR)
         {
-            inWhile = 0;
+            entry.pop_front();
+            auto scope_command = ret.back().first;
+            auto scope_args = ret.back().second;
+            ret.pop_back();
+            scope_args.push_front(entry.front());
+            ret.push_back(pair<Command, list<string>>(scope_command, scope_args));
+            inScope = 0;
         }
         else
         {
-            auto _command_name = entry.front();
-            if (_command_name == Command::WhileMethStr)
+            if (_command_name == Command::WhileMethStr || _command_name == Command::IfMethStr)
             {
                 entry.pop_front();
-                inWhile = 1;
+                inScope = 1;
                 list<string> args;
                 args.push_back(entry.front());
                 auto cmd = DB::getInstance()->getCommand(_command_name);
                 ret.push_back(pair<Command, list<string>>(cmd, args));
             }
-            else if (inWhile)
+            else if (inScope)
             {
-                auto while_command = ret.back().first;
-                auto while_args = ret.back().second;
+                auto scope_command = ret.back().first;
+                auto scope_args = ret.back().second;
                 ret.pop_back();
                 string stringer = "";
                 while (!entry.empty())
                 {
                     stringer += entry.front();
                     entry.pop_front();
-                    if (!entry.empty())
-                        stringer += ",";
+                    stringer += ",";
                 }
-                while_args.push_back(stringer);
-                ret.push_back(pair<Command, list<string>>(while_command, while_args));
+                scope_args.push_back(stringer);
+                ret.push_back(pair<Command, list<string>>(scope_command, scope_args));
             }
             else
             {

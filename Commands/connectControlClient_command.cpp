@@ -11,29 +11,35 @@
 
 void clientSend(int client_socket)
 {
-    try
+
+    int is_sent = 1;
+    while (is_sent > 0)
     {
-        int is_sent = 1;
-        while (is_sent > 0)
+        auto command = DB::getInstance()->getNextUpdateQuery();
+        if (!command.empty())
         {
-            auto query = DB::getInstance()->getNextUpdateQuery();
-            while (query)
+
+            DB::getInstance()->lockMutex();
+            while (!command.empty())
             {
-                DB::getInstance()->lockMutex();
-                is_sent = send(client_socket, query, BUFFER_SIZE, 0);
+                is_sent = send(client_socket, command.c_str(), (u_int)command.length(), 0);
                 if (is_sent == -1)
                 {
                     std::cout << "Error sending message" << std::endl;
                 }
-                query = DB::getInstance()->getNextUpdateQuery();
-                DB::getInstance()->unlockMutex();
+                try
+                {
+
+                    command = DB::getInstance()->getNextUpdateQuery();
+                }
+                catch (const std::exception &e)
+                {
+                    break;
+                }
                 // sleep(3);
             }
+            DB::getInstance()->unlockMutex();
         }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
     }
 }
 int Command::ConnectControlClient(string args[])
@@ -85,7 +91,6 @@ int Command::ConnectControlClient(string args[])
 
     thread client_listen_thread = thread(clientSend, client_socket);
     client_listen_thread.detach();
-    std::cout << "Client Connected Successfuly" << endl;
     return 1;
 }
 

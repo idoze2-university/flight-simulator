@@ -1,11 +1,11 @@
-#ifndef WHILE_COMMAND_CPP
-#define WHILE_COMMAND_CPP
+#ifndef IF_COMMAND_CPP
+#define IF_COMMAND_CPP
 #include "../parser.h"
 #include "../command.h"
-int Command::WhileMeth(string args[])
+int Command::IfMeth(string args[])
 {
     int argc = stoi(args[0]);
-    while (Parser::parseCondition(args[1]))
+    if (Parser::parseCondition(args[1]))
     {
         int i = 2;
         for (; i <= argc; i++)

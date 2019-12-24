@@ -10,7 +10,7 @@ DB::DB()
     _command_names[Command::PrintMethStr] = Command(Command::PrintMeth);
     _command_names[Command::SleepMethStr] = Command(Command::SleepMeth);
     _command_names[Command::WhileMethStr] = Command(Command::WhileMeth);
-    // _command_names[Command::IfMethStr] = Command(Command::IfMeth);
+    _command_names[Command::IfMethStr] = Command(Command::IfMeth);
     names[0] = "/instrumentation/airspeed-indicator/indicated-speed-kt";
     names[1] = "/sim/time/warp";
     names[2] = "/controls/switches/magnetos";
@@ -103,23 +103,20 @@ string DB::getBinding(string key)
 {
     return _symbol_binding[key];
 }
-char *DB::getNextUpdateQuery()
+string DB::getNextUpdateQuery()
 {
-    auto entry = _update_queue.front();
-    if (entry.first.size())
+
+    if (!_update_queue.empty())
     {
-        string _ret;
-        _ret += "setd ";
-        _ret += entry.first + " \'";
-        _ret += to_string(entry.second) + "\'";
-        auto ret = new char[_ret.size()];
-        strcpy(ret, _ret.c_str());
+        auto entry = _update_queue.front();
+        ostringstream str;
+        str << "set " << entry.first << " " << to_string(entry.second) << "\r\n";
         _update_queue.pop();
-        return ret;
+        return str.str();
     }
     else
     {
-        return nullptr;
+        return string("\0");
     }
 }
 
@@ -160,7 +157,24 @@ void DB::setServerValues(char *values)
     smatch res;
     for (int i = 0; regex_search(str, res, exp); i++, str = res.suffix())
     {
-        _server_values.emplace(names[i], stod(res[0]));
+        auto key = names[i];
+        auto newval = stod(res[0]);
+        try
+        {
+            if (_server_values[key] != newval)
+            {
+                throw exception();
+            }
+        }
+        catch (const std::exception &e)
+        {
+            _server_values.emplace(key, newval);
+            auto key_symbol = "sim(\"" + key + "\")";
+            if (isBound(key_symbol))
+            {
+                setSymbol(getBinding(key_symbol), newval);
+            }
+        }
     }
     unlockMutex();
 }

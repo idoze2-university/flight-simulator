@@ -8,6 +8,7 @@
 #include <regex>
 using namespace std;
 #define BUFFER_SIZE 1024
+#define QUERY_SIZE 128
 #define BindRTL "->"
 #define BindLTR "<-"
 #define BindEQ "="
@@ -28,8 +29,17 @@ class DB
 public:
     static std::shared_ptr<DB> getInstance()
     {
-        static std::shared_ptr<DB> s{new DB};
-        return s;
+        while (true)
+        {
+            try
+            {
+                static std::shared_ptr<DB> s{new DB};
+                return s;
+            }
+            catch (const std::exception &e)
+            {
+            }
+        }
     }
     //-- Mutex
     void lockMutex();
@@ -40,7 +50,7 @@ public:
     double getServerValue(string);
     double getSymbol(string);
     string getBinding(string);
-    char *getNextUpdateQuery();
+    string getNextUpdateQuery();
 
     //-- Setters
     void setSymbol(string, double);

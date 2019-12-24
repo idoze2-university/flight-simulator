@@ -72,7 +72,6 @@ int Command::OpenDataServer(string args[])
     }
     else
     {
-        std::cout << "Server is now listening ..." << std::endl;
     }
 
     // accepting a client

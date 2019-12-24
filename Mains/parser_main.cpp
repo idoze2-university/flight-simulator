@@ -10,7 +10,16 @@ int main(int argc, char *argv[])
     {
         cerr << "Please provide a file name for commands file." << endl;
     }
-    Parser::parse(Lexer::lex(fp));
+    auto prog = Parser::parse(Lexer::lex(fp));
+    for (auto entry : prog)
+    {
+        cout << "[";
+        for (auto s : entry.second)
+        {
+            cout << s << " ";
+        }
+        cout << "]" << endl;
+    }
     fclose(fp);
     return 0;
 }

@@ -256,7 +256,7 @@ double calculateAll(queue<string> q)
     while (!q.empty())
     {
         string token = q.front();
-        if (Lexer::isMathToken(token[0]))
+        if (Lexer::isMathToken(token[0]))//TODO: FIX! -1.0 crashes this
         {
             second = stack.top();
             stack.pop();

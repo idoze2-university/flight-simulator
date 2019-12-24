@@ -9,8 +9,8 @@ DB::DB()
     _command_names[Command::VarMethStr] = Command(Command::DefineVar);
     _command_names[Command::PrintMethStr] = Command(Command::PrintMeth);
     _command_names[Command::SleepMethStr] = Command(Command::SleepMeth);
-    // _command_names[Command::WhileMethStr] = Command(WhileMeth);
-    // _command_names[Command::IfMethStr] = Command(IfMeth);
+    _command_names[Command::WhileMethStr] = Command(Command::WhileMeth);
+    // _command_names[Command::IfMethStr] = Command(Command::IfMeth);
     names[0] = "/instrumentation/airspeed-indicator/indicated-speed-kt";
     names[1] = "/sim/time/warp";
     names[2] = "/controls/switches/magnetos";

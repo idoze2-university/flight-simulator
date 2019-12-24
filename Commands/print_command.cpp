@@ -13,7 +13,7 @@ int Command::PrintMeth(string args[])
     {
     }
 
-    cout << args[0] << endl;
+    cout << arg << endl;
     return 0;
 }
 #endif

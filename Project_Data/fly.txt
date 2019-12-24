@@ -1,29 +1,9 @@
 openDataServer(5400)
 connectControlClient("127.0.0.1",5402)
 var rudder -> sim("/controls/flight/rudder")
-Sleep(45*1000)
-rudder = 1
-Sleep(1000)
-rudder = 0.5
-Sleep(11 * 1000)
-rudder = 0
-Sleep(11 * 1000)
-udder = 1
-Sleep(11 * 1000)
-rudder = 0.5
-Sleep(11 * 1000)
-rudder = 0
-Sleep(11 * 1000)
-udder = 1
-Sleep(11 * 1000)
-rudder = 0.5
-Sleep(11 * 1000)
-rudder = 0
-Sleep(11 * 1000)
-udder = 1
-Sleep(11 * 1000)
-rudder = 0.5
-Sleep(11 * 1000)
-rudder = 0.666
-Sleep(1000000)
+rudder = 0.0
+while rudder < 1.0 {
+    rudder = rudder + 0.1
+    Sleep(1000)
+}
 Print("done")

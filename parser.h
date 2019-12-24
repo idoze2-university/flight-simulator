@@ -15,6 +15,7 @@ class Parser
 public:
     static list<pair<Command, list<string>>> parse(list<list<string>>);
     static double parseValue(string);
+    static pair<Command, list<string>> parse_line(list<string>);
     static int parseCondition(string);
 };
 #endif

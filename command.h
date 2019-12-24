@@ -42,8 +42,8 @@ public:
     static int OpenDataServer(string[]);
     static int ConnectControlClient(string[]);
     static int DefineVar(string[]);
-    // static int PrintMeth(string[]);
-    // static int SleepMeth(string[]);
+    static int PrintMeth(string[]);
+    static int SleepMeth(string[]);
     // static int WhileMeth(string[]);
     // static int IfMeth(string[]);
     int execute(string args[]) { return (method)(args); };

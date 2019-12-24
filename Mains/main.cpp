@@ -14,8 +14,10 @@ int main(int argc, char *argv[])
     }
     //-----Run program from file-----------------------------------------------------------------//
     auto program = Parser::parse(Lexer::lex(fp));
+    int i = 1;
     for (auto p : program)
     {
+        cout << "Executing Line " << i++ << endl;
         auto comm = p.first;
         string *args = new string[p.second.size()];
         copy(p.second.begin(), p.second.end(), args);

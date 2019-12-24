@@ -1,12 +1,35 @@
 #ifndef OPEN_SERVER_COMMAND_CPP
 #define OPEN_SERVER_COMMAND_CPP
+#define BUFFSIZE 1024
 #include <sys/socket.h>
 #include <thread>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <regex>
+#include "../DB.h"
 #include "../command.h"
-
+using namespace std;
+void serverListen(int client_socket, int loop = 0)
+{
+    try
+    {
+        int valread = 1;
+        while (valread > 0)
+        {
+            char buffer[BUFFSIZE];
+            valread = read(client_socket, buffer, BUFFSIZE);
+            DB::getInstance()->setServerValues(buffer);
+            if (!loop)
+                break;
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+        exit(1);
+    }
+}
 int Command::OpenDataServer(string args[])
 {
     int port;
@@ -63,7 +86,6 @@ int Command::OpenDataServer(string args[])
 
     thread server_listen_thread = thread(serverListen, client_socket, 0);
     server_listen_thread.join();
-    std::cout << "Client Connected Successfuly" << endl;
     close(socketfd); //closing the listening socket
     server_listen_thread = thread(serverListen, client_socket, 1);
     server_listen_thread.detach();
@@ -71,24 +93,4 @@ int Command::OpenDataServer(string args[])
     return 1;
 }
 
-void serverListen(int client_socket, int loop = 0)
-{
-    try
-    {
-        int valread = 1;
-        while (valread > 0)
-        {
-            char buffer[1024] = {0};
-            valread = read(client_socket, buffer, 1024);
-            std::cout << '\r' << buffer << std::endl;
-            if (!loop)
-                break;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-        exit(1);
-    }
-}
 #endif

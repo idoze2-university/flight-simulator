@@ -5,14 +5,43 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <bits/stdc++.h>
 #include "../command.h"
+#include "../DB.h"
 
+void clientSend(int client_socket)
+{
+    try
+    {
+        int is_sent = 1;
+        while (is_sent > 0)
+        {
+            auto query = DB::getInstance()->getNextUpdateQuery();
+            while (query)
+            {
+                DB::getInstance()->lockMutex();
+                is_sent = send(client_socket, query, BUFFER_SIZE, 0);
+                if (is_sent == -1)
+                {
+                    std::cout << "Error sending message" << std::endl;
+                }
+                query = DB::getInstance()->getNextUpdateQuery();
+                DB::getInstance()->unlockMutex();
+                // sleep(3);
+            }
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
 int Command::ConnectControlClient(string args[])
 {
     string ip;
     try
     {
-        ip = args[1];
+        ip = args[0];
     }
     catch (const std::exception &e)
     {
@@ -22,7 +51,7 @@ int Command::ConnectControlClient(string args[])
     int port;
     try
     {
-        port = stoi(args[0]);
+        port = stoi(args[1]);
     }
     catch (const std::exception &e)
     {
@@ -42,7 +71,7 @@ int Command::ConnectControlClient(string args[])
     sockaddr_in address;          //in means IP4
     address.sin_family = AF_INET; //IP4
     char *ip_addr = new char[ip.size()];
-    copy(ip.begin(), ip.end(), ip_addr);
+    strcpy(ip_addr, ip.c_str());
     address.sin_addr.s_addr = inet_addr(ip_addr); //the localhost address
     address.sin_port = htons(port);
 
@@ -53,39 +82,11 @@ int Command::ConnectControlClient(string args[])
         std::cerr << "Could not connect to host server" << std::endl;
         return -4;
     }
-    else
-    {
-        std::cout << "Client is now connected to server" << std::endl;
-    }
-    return 1;
-}
 
-void serverSend(int client_socket, int loop = 0)
-{
-    try
-    {
-        int valread = 1;
-        while (valread > 0)
-        {
-            string hello = "*";
-            int is_sent = send(client_socket, "", /*SIZE*/ 0, 0);
-            if (is_sent == -1)
-            {
-                std::cout << "Error sending message" << std::endl;
-            }
-            else
-            {
-                std::cout << "Hello message sent to server" << std::endl;
-            }
-            if (!loop)
-                break;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-        exit(1);
-    }
+    thread client_listen_thread = thread(clientSend, client_socket);
+    client_listen_thread.detach();
+    std::cout << "Client Connected Successfuly" << endl;
+    return 1;
 }
 
 #endif

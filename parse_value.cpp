@@ -11,7 +11,7 @@ bool isVariable(string var)
 {
     for (char c : var)
     {
-        if (Lexer::isBadCharacter(c, 2))
+        if (Lexer::isBadCharacter(c, 1))
         {
             return false;
         }
@@ -75,6 +75,7 @@ queue<string> shuntingYard(string s)
                         {
                             break;
                         }
+                        i++;
                     }
                 }
                 outputQueue.push(to_string(num + fraction));
@@ -438,7 +439,7 @@ double Parser::parseValue(string var)
     return calculateAll(queue);
 }
 
-int parseCondition(string s)
+int Parser::parseCondition(string s)
 {
     string left_str, right_str, condition, e = s + ". Bad Condition Error";
     double left_v, right_v;

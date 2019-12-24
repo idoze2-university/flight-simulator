@@ -13,7 +13,7 @@ list<pair<Command, list<string>>> Parser::parse(list<list<string>> lexer_output)
             cmd = Command(DB::getInstance()->getCommand(_command_name));
             entry.pop_front();
         }
-        catch (const std::exception &e)
+        catch (const char *e)
         {
             cmd = Command(Command::DefineVar);
         }

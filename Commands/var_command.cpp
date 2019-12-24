@@ -6,7 +6,6 @@
 int Command::DefineVar(string args[])
 {
     auto var1 = args[0];
-    cout << var1 << endl;
     auto binding = args[1];
     auto var2 = args[2];
     if (binding == BindRTL)
@@ -16,15 +15,14 @@ int Command::DefineVar(string args[])
     else if (binding == BindLTR)
     {
         DB::getInstance()->setBinding(var2, var1);
+        auto value = DB::getInstance()->getSymbol(var2);
+        DB::getInstance()->setSymbol(var1, value);
     }
     else
     {
         auto value = Parser::parseValue(var2);
         DB::getInstance()->setSymbol(var1, value);
-        return 0;
     }
-    auto value = DB::getInstance()->getSymbol(var2);
-    DB::getInstance()->setSymbol(var1, value);
     return 0;
 }
 #endif

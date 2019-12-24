@@ -5,6 +5,7 @@
 #include <memory>
 #include <queue>
 #include <mutex>
+#include <regex>
 using namespace std;
 #define BUFFER_SIZE 1024
 #define BindRTL "->"
@@ -15,6 +16,7 @@ class DB
 {
     DB();
     unordered_map<string, Command> _command_names;
+    string names[36];
     unordered_map<string, double> _server_values;
     unordered_map<string, double> _symbol_table;
     unordered_map<string, string> _symbol_binding;
@@ -38,11 +40,12 @@ public:
     double getServerValue(string);
     double getSymbol(string);
     string getBinding(string);
-    string getNextUpdateQuery();
+    char *getNextUpdateQuery();
 
     //-- Setters
     void setSymbol(string, double);
     void setBinding(string, string);
+    void setServerValues(char *);
 };
 
 #endif

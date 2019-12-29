@@ -59,4 +59,4 @@ make copy_protocol <optionally FG_PATH>
 ```bash
 make run
 ```
-MIT © [Ido Zeira](mailto:ido.ze2@gmail.com)
+MIT © [Ido Zeira](github.com/idoze2), [Allen Bronshtein](github.com/allenbronshtein)

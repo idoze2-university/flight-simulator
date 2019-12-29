@@ -30,13 +30,24 @@ make <COMMAND>_<APP> File=<Fly.txt Path>
 - lexer
 - parser
 - main
-
  ### Additional Makefile Commands
- <b> compile main (everything), run full gui simulator and run main parallelly</b>
+ <b>run the simulator:</b>
+ (note, you have you have flightgear installed for this)
+	Edit your path in the makefile, or use with argument FG_PATH=<PATH>
+ ```bash
+ make run_simulator <optionally FG_PATH>
+ ```
+ optionally, you can run a minimalised version of the simulator, with flags specified in flags_mini.txt:
+ ```bash
+ make run_simulator_mini <optionally FG_PATH>
+ ```
+ <b>copy generic.xml file to the required flightgear folder.</b>
+	```bash
+	make copy_protocol <optionally FG_PATH>
+	```
+ <b>compile main (everything), run full gui simulator and run main parallelly:</b>
+	(note, this is heavy.)
  ```bash
  make run
  ```
- <b></b>
- ```bash
- make run
- ```
+MIT © [Ido Zeira](mailto:ido.ze2@gmail.com)

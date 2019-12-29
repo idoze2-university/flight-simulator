@@ -13,7 +13,7 @@ sudo apt install g++
 sudo apt install make
 ```
 ## Usage:
-Edit fly.txt (default is Project_Data/fly.txt)
+Edit fly.txt (default is Project_Data/fly.txt) to run a script, make sure the syntax is as defined in the exercise, 
 
 ## Makefile usage (Recommended for testing)
 ```bash

@@ -10,18 +10,23 @@
 #include "../DB.h"
 #include "../command.h"
 using namespace std;
-void serverListen(int client_socket, int loop = 0)
+
+void getFromServer(int client_socket)
+{
+    char buffer[BUFFSIZE];
+    if (read(client_socket, buffer, BUFFSIZE) > 0)
+    {
+        DB::getInstance()->setServerValues(buffer);
+    }
+}
+
+void serverListen(int client_socket)
 {
     try
     {
-        int valread = 1;
-        while (valread > 0)
+        while (1)
         {
-            char buffer[BUFFSIZE];
-            valread = read(client_socket, buffer, BUFFSIZE);
-            DB::getInstance()->setServerValues(buffer);
-            if (!loop)
-                break;
+            getFromServer(client_socket);
         }
     }
     catch (const std::exception &e)
@@ -82,13 +87,9 @@ int Command::OpenDataServer(string args[])
         std::cerr << "Error accepting client" << std::endl;
         return -4;
     }
-
-    thread server_listen_thread = thread(serverListen, client_socket, 0);
-    server_listen_thread.join();
-    close(socketfd); //closing the listening socket
-    server_listen_thread = thread(serverListen, client_socket, 1);
+    getFromServer(client_socket);
+    auto server_listen_thread = thread(serverListen, client_socket);
     server_listen_thread.detach();
-    close(client_socket);
     return 1;
 }
 

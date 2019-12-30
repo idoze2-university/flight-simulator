@@ -7,21 +7,7 @@
 using namespace std;
 //---Class Labels--------------------------------------------------------------------------------//
 class Command;
-//----Definitions--------------------------------------------------------------------------------//
-#define DEF_PORT 5400
-//Command Strings
-//Command Argument Count
-#define ARGC_OpenDataServer 1       //Port
-#define ARGC_ConnectControlClient 2 //IP,Port
-#define ARGC_VarMeth 2              //Hook direction (->/<-),Value
-#define ARGC_PrintMeth 1            //Data
-#define ARGC_SleepMeth 1            //Time
-#define ARGC_While 0                //Condition+function(could be anything)
-//----Global Vars--------------------------------------------------------------------------------//
-
 //----Static Function Labels---------------------------------------------------------------------//
-//Assisting Functions
-void serverListen(int, int);
 //Command Function Labels
 //----Class Implementations----------------------------------------------------------------------//
 class Command

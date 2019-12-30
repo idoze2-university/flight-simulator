@@ -10,6 +10,15 @@ int main(int argc, char *argv[])
         cerr << "Please provide a file name for commands file." << endl;
     }
     list<list<string>> lexer_list = Lexer::lex(fp);
+    for (auto entry : lexer_list)
+    {
+        cout << "[";
+        for (auto s : entry)
+        {
+            cout << s << ",";
+        }
+        cout << "]" << endl;
+    }
     fclose(fp);
     return 0;
 }

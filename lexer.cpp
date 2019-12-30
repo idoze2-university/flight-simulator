@@ -90,7 +90,7 @@ std::string strip(std::string line)
     std::string s = "";
     for (char c : line)
     {
-        if (isBadCharacter(c, 0) && !s_flag)
+        if (Lexer::isBadCharacter(c, 0) && !s_flag)
         {
             continue;
         }
@@ -171,7 +171,7 @@ void var_bad_line(std::string line)
         for (; i < pos; i++)
         {
             c = line[i];
-            if (isBadCharacter(c, 1))
+            if (Lexer::isBadCharacter(c, 1))
             {
                 throw e;
             }
@@ -204,7 +204,7 @@ void var_bad_line(std::string line)
         for (; i < pos; i++)
         {
             c = line[i];
-            if (isBadCharacter(c, 1))
+            if (Lexer::isBadCharacter(c, 1))
             {
                 throw e;
             }
@@ -237,7 +237,7 @@ void var_bad_line(std::string line)
         for (; i < pos; i++)
         {
             c = line[i];
-            if (isBadCharacter(c, 1))
+            if (Lexer::isBadCharacter(c, 1))
             {
                 throw e;
             }
@@ -250,7 +250,7 @@ void var_bad_line(std::string line)
         string argument = line.substr(pos + 1, line.size());
         for (char ch : argument)
         {
-            if (isBadCharacter(ch, 1))
+            if (Lexer::isBadCharacter(ch, 2))
             {
                 throw e;
             }
@@ -588,7 +588,6 @@ list<list<string>> Lexer::lex(FILE *fp)
             }
             std::string command = "}", go_back = std::to_string(move_counter);
             lexer_list_node.push_back(command);
-            lexer_list_node.push_back(closing);
             lexer_list_node.push_back(go_back);
             lexer_list.push_back(lexer_list_node);
         }
@@ -622,6 +621,7 @@ list<list<string>> Lexer::lex(FILE *fp)
                 printError(e, line_counter);
             }
             lexer_list_node.push_back(dest);
+            lexer_list_node.push_back("=");
             lexer_list_node.push_back(src);
             lexer_list.push_back(lexer_list_node);
         }
@@ -686,6 +686,7 @@ list<string> Lexer::lex(std::string s)
         argument2 = line.substr(start_pos_arg2, end_pos_arg2 - start_pos_arg2 - 1);
         lexer_list_node.push_back(command);
         lexer_list_node.push_back(argument1);
+        lexer_list_node.push_back(argument2);
     }
     else if (line.find(VAR_STR) != string::npos)
     {
@@ -813,14 +814,14 @@ list<string> Lexer::lex(std::string s)
             std::string e = "Bad assigning";
             for (char c : dest)
             {
-                if (isBadCharacter(c, 2))
+                if (Lexer::isBadCharacter(c, 2))
                 {
                     throw e;
                 }
             }
             for (char c : src)
             {
-                if (isBadCharacter(c, 2))
+                if (Lexer::isBadCharacter(c, 2))
                 {
                     throw e;
                 }
@@ -831,6 +832,7 @@ list<string> Lexer::lex(std::string s)
             printError(e, line_counter);
         }
         lexer_list_node.push_back(dest);
+        lexer_list_node.push_back("=");
         lexer_list_node.push_back(src);
     }
     try

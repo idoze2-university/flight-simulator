@@ -1,12 +1,40 @@
 #ifndef OPEN_SERVER_COMMAND_CPP
 #define OPEN_SERVER_COMMAND_CPP
+#define BUFFSIZE 1024
 #include <sys/socket.h>
 #include <thread>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <regex>
+#include "../DB.h"
 #include "../command.h"
+using namespace std;
 
+void getFromServer(int client_socket)
+{
+    char buffer[BUFFSIZE];
+    if (read(client_socket, buffer, BUFFSIZE) > 0)
+    {
+        DB::getInstance()->setServerValues(buffer);
+    }
+}
+
+void serverListen(int client_socket)
+{
+    try
+    {
+        while (1)
+        {
+            getFromServer(client_socket);
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+        exit(1);
+    }
+}
 int Command::OpenDataServer(string args[])
 {
     int port;
@@ -49,7 +77,6 @@ int Command::OpenDataServer(string args[])
     }
     else
     {
-        std::cout << "Server is now listening ..." << std::endl;
     }
 
     // accepting a client
@@ -60,35 +87,10 @@ int Command::OpenDataServer(string args[])
         std::cerr << "Error accepting client" << std::endl;
         return -4;
     }
-
-    thread server_listen_thread = thread(serverListen, client_socket, 0);
-    server_listen_thread.join();
-    std::cout << "Client Connected Successfuly" << endl;
-    close(socketfd); //closing the listening socket
-    server_listen_thread = thread(serverListen, client_socket, 1);
+    getFromServer(client_socket);
+    auto server_listen_thread = thread(serverListen, client_socket);
     server_listen_thread.detach();
-    close(client_socket);
     return 1;
 }
 
-void serverListen(int client_socket, int loop = 0)
-{
-    try
-    {
-        int valread = 1;
-        while (valread > 0)
-        {
-            char buffer[1024] = {0};
-            valread = read(client_socket, buffer, 1024);
-            std::cout << '\r' << buffer << std::endl;
-            if (!loop)
-                break;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-        exit(1);
-    }
-}
 #endif

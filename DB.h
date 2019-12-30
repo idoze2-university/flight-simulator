@@ -5,8 +5,10 @@
 #include <memory>
 #include <queue>
 #include <mutex>
+#include <regex>
 using namespace std;
 #define BUFFER_SIZE 1024
+#define QUERY_SIZE 128
 #define BindRTL "->"
 #define BindLTR "<-"
 #define BindEQ "="
@@ -15,6 +17,7 @@ class DB
 {
     DB();
     unordered_map<string, Command> _command_names;
+    string names[36];
     unordered_map<string, double> _server_values;
     unordered_map<string, double> _symbol_table;
     unordered_map<string, string> _symbol_binding;
@@ -26,8 +29,17 @@ class DB
 public:
     static std::shared_ptr<DB> getInstance()
     {
-        static std::shared_ptr<DB> s{new DB};
-        return s;
+        while (true)
+        {
+            try
+            {
+                static std::shared_ptr<DB> s{new DB};
+                return s;
+            }
+            catch (const std::exception &e)
+            {
+            }
+        }
     }
     //-- Mutex
     void lockMutex();
@@ -43,6 +55,7 @@ public:
     //-- Setters
     void setSymbol(string, double);
     void setBinding(string, string);
+    void setServerValues(char *);
 };
 
 #endif

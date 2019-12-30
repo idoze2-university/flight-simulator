@@ -4,3 +4,4 @@ project.pdf
 lexer.out
 /cmake-build-debug/
 .gitignore
+a.out

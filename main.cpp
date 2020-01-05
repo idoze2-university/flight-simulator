@@ -1,6 +1,6 @@
-#include "../command.h"
-#include "../lexer.h"
-#include "../parser.h"
+#include "command.h"
+#include "lexer.h"
+#include "parser.h"
 
 int main(int argc, char *argv[])
 {

@@ -36,7 +36,6 @@ void clientSend(int client_socket)
                 {
                     break;
                 }
-                // sleep(3);
             }
             DB::getInstance()->unlockMutex();
         }

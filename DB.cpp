@@ -79,7 +79,6 @@ double DB::getServerValue(string key)
     }
     catch (const std::exception &e)
     {
-        std::cout << "Server value: " << key << " is not defined." << endl;
         return -1;
     }
 }
@@ -95,7 +94,6 @@ double DB::getSymbol(string symbol)
     }
     catch (const std::exception &e)
     {
-        std::cout << "Symbol: " << symbol << " is not defined." << endl;
         return -1;
     }
 }

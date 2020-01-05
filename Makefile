@@ -31,9 +31,7 @@ endif
 
 COMPILER=g++
 COMPILER_ARGS= -ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
-TARGET_FILES=*.cpp
-OUTFILES=*.out
-MAIN_DIR=Mains
+MAIN_DIR=.
 clean:
 	@rm -f *.out
 # Lexer (Allen) ###################################################################################

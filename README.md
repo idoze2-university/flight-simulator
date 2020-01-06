@@ -2,15 +2,13 @@
 This project was written as part of the Advanced Programming 1 Course (89210), BIU.
 
 ## Dependencies
-- g++
-- make
-```bash
-sudo apt install make g++
-```
 - [Flight Gear](https://www.flightgear.org/)
+- g++
+```bash
+sudo apt install g++
+```
 
-
-<b>Optional: </b>
+<b>Optional:</b>
 ```bash
 sudo apt install make
 ```

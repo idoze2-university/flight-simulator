@@ -21,6 +21,7 @@ Note: must be used on a unix machine.
 make <APP> (OPTIONAL: File=<Fly.txt Path> )
 ```
 Default file is fly.txt located in this repo.
+
 <b>Available apps:</b>
 - lexer
 - parser

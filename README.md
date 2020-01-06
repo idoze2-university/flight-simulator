@@ -1,9 +1,11 @@
 # EX3
 This project was written as part of the Advanced Programming 1 Course (89210), BIU.
+
 ## Dependencies
 - g++
+- make
 ```bash
-sudo apt install g++
+sudo apt install make g++
 ```
 - [Flight Gear](https://www.flightgear.org/)
 
@@ -16,47 +18,44 @@ sudo apt install make
 Edit fly.txt (default is Project_Data/fly.txt) to run a script, make sure the syntax is as defined in the exercise, 
 
 ## Makefile usage (Recommended for testing)
+Note: must be used on a unix machine.
 ```bash
-make <COMMAND>_<APP> File=<Fly.txt Path>
+make <APP> (OPTIONAL: File=<Fly.txt Path> )
 ```
-(To use the default fly.txt, you can ignore the File=... part.)
-
-<b>Available Commands:</b>
-- compile
-- run
-- test (run & compile)
-
+Default file is fly.txt located in this repo.
 <b>Available apps:</b>
 - lexer
 - parser
 - main
+
+<b>To compile-only any app:<\b>
+ ```bash
+ make <APP>.out 
+ ```
 
 ### Additional Makefile Commands
 <b>run the simulator:</b>
 
 (note, you have you have flightgear installed for this)
 
-Edit your path in the makefile, or use with argument FG_PATH=<PATH>
+Edit your path in the make	@cd ./$(PROJECT_DATA_DIR)
+	@echo $$PWDfile, or use with argument FG_PATH=<PATH>.
 
 ```bash
 make run_simulator <optionally FG_PATH>
 ```
-optionally, you can run a minimalised version of the simulator, with flags specified in flags_mini.txt:
-
+optionally, you can run a minimalised version of the simulator, with flags specified in Project_Data/flags_mini.txt:
 ```bash
 make run_simulator_mini <optionally FG_PATH>
 ```
-<b>copy generic.xml file to the required flightgear folder.</b>
 
+<b>copy generic.xml file to the required flightgear folder.</b>
 ```bash
 make copy_protocol <optionally FG_PATH>
 ```
 
 <b>compile main (everything), run full gui simulator and run main parallelly:</b>
-
-(note, this is heavy.)
-
 ```bash
 make run
 ```
-MIT © [Ido Zeira](github.com/idoze2), [Allen Bronshtein](github.com/allenbronshtein)
+BIU © [Ido Zeira](github.com/idoze2), [Allen Bronshtein](github.com/allenbronshtein)

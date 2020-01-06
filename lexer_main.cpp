@@ -1,5 +1,4 @@
-#include "../parser.h"
-#include "../lexer.h"
+#include "lexer.h"
 int main(int argc, char *argv[])
 {
     //------Open the file from argv[1]-----------------------------------------------------------//
@@ -10,13 +9,13 @@ int main(int argc, char *argv[])
     {
         cerr << "Please provide a file name for commands file." << endl;
     }
-    auto prog = Parser::parse(Lexer::lex(fp));
-    for (auto entry : prog)
+    list<list<string>> lexer_list = Lexer::lex(fp);
+    for (auto entry : lexer_list)
     {
         cout << "[";
-        for (auto s : entry.second)
+        for (auto s : entry)
         {
-            cout << s << " ";
+            cout << s << ",";
         }
         cout << "]" << endl;
     }

@@ -5,3 +5,16 @@ lexer.out
 /cmake-build-debug/
 .gitignore
 a.out
+command.o
+DB.o
+lexer.o
+main.out
+parse_value.o
+parser.o
+Commands/connectControlClient_command.o
+Commands/if_command.o
+Commands/openServer_command.o
+Commands/print_command.o
+Commands/sleep_command.o
+Commands/var_command.o
+Commands/while_command.o

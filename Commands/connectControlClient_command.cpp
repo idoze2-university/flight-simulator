@@ -29,14 +29,12 @@ void clientSend(int client_socket)
                 }
                 try
                 {
-
                     command = DB::getInstance()->getNextUpdateQuery();
                 }
                 catch (const std::exception &e)
                 {
                     break;
                 }
-                // sleep(3);
             }
             DB::getInstance()->unlockMutex();
         }

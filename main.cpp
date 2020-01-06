@@ -23,7 +23,5 @@ int main(int argc, char *argv[])
     }
     //------Free Memory--------------------------------------------------------------------------//
     fclose(fp);
-
-    //TODO: complete writing command methods.
     return 0;
 }

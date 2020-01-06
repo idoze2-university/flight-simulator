@@ -36,8 +36,7 @@ Default file is fly.txt located in this repo.
 
 (note, you have you have flightgear installed for this)
 
-Edit your path in the make	@cd ./$(PROJECT_DATA_DIR)
-	@echo $$PWDfile, or use with argument FG_PATH=<PATH>.
+Edit your path in the make, or use with argument FG_PATH=<PATH>.
 
 ```bash
 make run_simulator <optionally FG_PATH>

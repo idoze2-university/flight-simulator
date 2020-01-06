@@ -55,4 +55,13 @@ make copy_protocol <optionally FG_PATH>
 ```bash
 make run
 ```
+
+### Fake server
+For low-end usage, in Project_Data we have included a fake_server.py which provides a debugging-friendly simulation of a server-client side.
+Run the main application and then use:
+```bash
+sudo apt install python3
+cd Project_Data
+python3 fake_server.py <IP> <PORT>
+```
 BIU © [Ido Zeira](github.com/idoze2), [Allen Bronshtein](github.com/allenbronshtein)

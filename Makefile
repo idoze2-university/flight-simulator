@@ -1,4 +1,60 @@
+OUTFILE_MAIN=--main.out
+--all: $(OUTFILE_MAIN)
+# DEFINE DATA DIR #################################################################################
 PROJECT_DATA_DIR=Project_Data
+
+# COMPILATION #####################################################################################
+ifndef file #sets default for 'file' variable.
+override file=fly.txt
+endif
+
+COMPILER=g++
+CFLAGS= -ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
+MAIN_DIR=.
+clean:
+	@rm -fr ./*.out */*.o *.o
+
+%.o : %.cpp
+	g++ -g -o $@ -c $< $(CFLAGS)
+
+# DEPENDENCIES ####################################################################################
+COMMAND_LIST = $(shell ls Commands |grep .cpp| sed -e 's/\.cpp//g' | awk '{ print "Commands/" $$0 }')
+ALL_DEPENDENCIES = $(foreach d,parser parse_value command lexer DB $(COMMAND_LIST),$(d).o)
+
+DEPENDENCIES_LEXER=$(foreach d,lexer command,$(d).o) lexer_main.cpp
+DEPENDENCIES_PARSER= $(ALL_DEPENDENCIES) parser_main.cpp
+DEPENDENCIES_MAIN:=$(ALL_DEPENDENCIES) main.cpp
+
+# LEXER (Allen) ###################################################################################
+OUTFILE_LEXER=--lexer.out
+
+$(OUTFILE_LEXER): $(DEPENDENCIES_LEXER)
+	@$(COMPILER) $(DEPENDENCIES_LEXER) $(CFLAGS) -o $(OUTFILE_LEXER)
+
+lexer: $(OUTFILE_LEXER)
+	@./$(OUTFILE_LEXER) $(file)
+
+# PARSER (Allen, Ido) #############################################################################
+OUTFILE_PARSER=--parser.out
+
+$(OUTFILE_PARSER): $(DEPENDENCIES_PARSER)
+	$(COMPILER) $(DEPENDENCIES_PARSER) $(CFLAGS) -o $(OUTFILE_PARSER)
+
+parser: $(OUTFILE_PARSER)
+	./$(OUTFILE_PARSER) $(file)
+
+# MAIN (Ido) ######################################################################################
+$(OUTFILE_MAIN):$(DEPENDENCIES_MAIN)
+	$(COMPILER) $(DEPENDENCIES_MAIN) $(CFLAGS) -o $(OUTFILE_MAIN)
+
+main: $(OUTFILE_MAIN)
+	./$(OUTFILE_MAIN) $(file)
+# MAIN TARGETS ####################################################################################
+TARGETS:= main lexer parser
+$(TARGETS):
+# Final target ####################################################################################
+run: $(OUTFILE_MAIN)
+	make main & make run_simulator
 
 # SERVER CONSTS ###################################################################################
 IN_PORT=5400
@@ -23,66 +79,4 @@ run_simulator:
 
 run_simulator_mini:
 	@$(FG) $(FG_ARGS) $(FG_ARGS_MINI)
-
-# Compilation #####################################################################################
-ifndef file #sets default for 'file' variable.
-override file=$(PROJECT_DATA_DIR)/fly.txt
-endif
-
-COMPILER=g++
-COMPILER_ARGS= -ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
-MAIN_DIR=.
-clean:
-	@rm -f *.out
-# Lexer (Allen) ###################################################################################
-_DEPENDENCIES_LEXER=lexer command
-DEPENDENCIES_LEXER=$(foreach d,$(_DEPENDENCIES_LEXER),$(d).cpp)
-OUTFILE_LEXER=lexer.out
-TARGET_FILE_LEXER=lexer_main.cpp
-
-compile_lexer:
-	@echo '################## NOW COMPILING LEXER ###############'
-	@$(COMPILER) $(DEPENDENCIES_LEXER) $(MAIN_DIR)/$(TARGET_FILE_LEXER) $(COMPILER_ARGS) -o $(OUTFILE_LEXER) ${COMPILER_EXTRA_ARGS}
-	@echo '################## END COMPILING #####################'
-
-run_lexer:
-	@./$(OUTFILE_LEXER) $(file)
-
-test_lexer: compile_lexer run_lexer clean
-
-# Parser (Allen, Ido) #############################################################################
-_DEPENDENCIES_PARSER=parser parse_value command lexer DB Commands/*
-DEPENDENCIES_PARSER=$(foreach d,$(_DEPENDENCIES_PARSER),$(d).cpp)
-OUTFILE_PARSER=parser.out
-TARGET_FILE_PARSER=parser_main.cpp
-
-compile_parser:
-	@echo '################## NOW COMPILING PARSER ###############'
-	@$(COMPILER) $(DEPENDENCIES_PARSER) $(MAIN_DIR)/$(TARGET_FILE_PARSER) $(COMPILER_ARGS) -o $(OUTFILE_PARSER) ${COMPILER_EXTRA_ARGS}
-	@echo '################## END COMPILING ######################'
-run_parser:
-	@./$(OUTFILE_PARSER) $(file)
-
-test_parser: compile_parser run_parser clean
-
-# Main (Ido) ######################################################################################
-_DEPENDENCIES_MAIN= $(_DEPENDENCIES_PARSER)
-DEPENDENCIES_MAIN=$(foreach d,$(_DEPENDENCIES_MAIN),$(d).cpp)
-#DEPENDENCIES_MAIN=$(SOURCE_FILES)
-OUTFILE_MAIN=a.out
-TARGET_FILE_MAIN=main.cpp
-
-compile_main:
-	@echo '################## NOW COMPILING MAIN ################'
-	@$(COMPILER) $(DEPENDENCIES_MAIN) $(MAIN_DIR)/$(TARGET_FILE_MAIN) $(COMPILER_ARGS) -o $(OUTFILE_MAIN) ${COMPILER_EXTRA_ARGS}
-	@echo '################## END COMPILING #####################'
-run_main:
-	@./$(OUTFILE_MAIN) $(file)
-
-test_main: compile_main run_main clean
-
-# Final target ####################################################################################
-run: compile_main
-	make run_simulator & make run_main
-
 

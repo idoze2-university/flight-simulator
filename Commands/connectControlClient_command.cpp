@@ -29,7 +29,6 @@ void clientSend(int client_socket)
                 }
                 try
                 {
-
                     command = DB::getInstance()->getNextUpdateQuery();
                 }
                 catch (const std::exception &e)

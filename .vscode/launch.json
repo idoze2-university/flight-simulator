@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "g++ build and debug active file",
+            "name": "main",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/--main.out",
+            "program": "${workspaceRoot}/main.out",
             "args": [
                 "fly.txt"
             ],
@@ -24,7 +24,33 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "g++ build active file",
+            "preLaunchTask": "make main",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "sourceFileMap": {
+                "/build/glibc-B9XfQf": "/usr/src/glibc"
+            },
+        },
+        {
+            "name": "lexer",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/lexer.out",
+            "args": [
+                "fly.txt"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing -gdb-set detach-on-fork off",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "make lexer",
             "miDebuggerPath": "/usr/bin/gdb",
             "sourceFileMap": {
                 "/build/glibc-B9XfQf": "/usr/src/glibc"

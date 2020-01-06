@@ -1,5 +1,3 @@
-OUTFILE_MAIN=--main.out
---all: $(OUTFILE_MAIN)
 # DEFINE DATA DIR #################################################################################
 PROJECT_DATA_DIR=Project_Data
 
@@ -22,11 +20,11 @@ COMMAND_LIST = $(shell ls Commands |grep .cpp| sed -e 's/\.cpp//g' | awk '{ prin
 ALL_DEPENDENCIES = $(foreach d,parser parse_value command lexer DB $(COMMAND_LIST),$(d).o)
 
 DEPENDENCIES_LEXER=$(foreach d,lexer command,$(d).o) lexer_main.cpp
-DEPENDENCIES_PARSER= $(ALL_DEPENDENCIES) parser_main.cpp
-DEPENDENCIES_MAIN:=$(ALL_DEPENDENCIES) main.cpp
+DEPENDENCIES_PARSER=$(ALL_DEPENDENCIES) parser_main.cpp
+DEPENDENCIES_MAIN=$(ALL_DEPENDENCIES) main.cpp
 
 # LEXER (Allen) ###################################################################################
-OUTFILE_LEXER=--lexer.out
+OUTFILE_LEXER=lexer.out
 
 $(OUTFILE_LEXER): $(DEPENDENCIES_LEXER)
 	@$(COMPILER) $(DEPENDENCIES_LEXER) $(CFLAGS) -o $(OUTFILE_LEXER)
@@ -35,15 +33,17 @@ lexer: $(OUTFILE_LEXER)
 	@./$(OUTFILE_LEXER) $(file)
 
 # PARSER (Allen, Ido) #############################################################################
-OUTFILE_PARSER=--parser.out
+OUTFILE_PARSER=parser.out
 
 $(OUTFILE_PARSER): $(DEPENDENCIES_PARSER)
-	$(COMPILER) $(DEPENDENCIES_PARSER) $(CFLAGS) -o $(OUTFILE_PARSER)
+	$(COMPILER) $(DEPENDENCIES_PARSER) $(CFLAGS) -o $\--(OUTFILE_PARSER)
 
 parser: $(OUTFILE_PARSER)
 	./$(OUTFILE_PARSER) $(file)
 
 # MAIN (Ido) ######################################################################################
+OUTFILE_MAIN=main.out
+
 $(OUTFILE_MAIN):$(DEPENDENCIES_MAIN)
 	$(COMPILER) $(DEPENDENCIES_MAIN) $(CFLAGS) -o $(OUTFILE_MAIN)
 

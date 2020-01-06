@@ -1,5 +1,5 @@
 # EX3
-This project was written as part of the Advanced Programming 1 Course (89210), BIU.
+This [project](https://github.com/idoze2/AdvProgGroup/) was written as part of the Advanced Programming 1 Course (89210), BIU.
 
 ## Dependencies
 - [Flight Gear](https://www.flightgear.org/)
@@ -13,7 +13,7 @@ sudo apt install g++
 sudo apt install make
 ```
 ## Usage:
-Edit fly.txt (default is Project_Data/fly.txt) to run a script, make sure the syntax is as defined in the exercise, 
+Edit fly.txt (default is Project_Data/fly.txt) to run a script, make sure the syntax is as defined in the exercise,
 
 ## Makefile usage (Recommended for testing)
 Note: must be used on a unix machine.
@@ -28,7 +28,7 @@ Default file is fly.txt located in this repo.
 
 <b>To compile-only any app:<\b>
  ```bash
- make <APP>.out 
+ make <APP>.out
  ```
 
 ### Additional Makefile Commands

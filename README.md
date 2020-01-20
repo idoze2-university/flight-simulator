@@ -27,7 +27,7 @@ Default file is fly.txt located in this repo.
 - parser
 - main
 
-<b>To compile-only any app:<\b>
+<b>To compile-only any app:</b>
  ```bash
  make <APP>.out
  ```
@@ -65,4 +65,4 @@ sudo apt install python3
 cd Project_Data
 python3 fake_server.py <IP> <PORT>
 ```
-BIU © [Ido Zeira](github.com/idoze2), [Allen Bronshtein](github.com/allenbronshtein)
+BIU © [Ido Zeira](http://github.com/idoze2), [Allen Bronshtein](http://github.com/allenbronshtein)

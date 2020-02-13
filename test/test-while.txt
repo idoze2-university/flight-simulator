@@ -1,0 +1,27 @@
+openDataServer(5400)
+connectControlClient("127.0.0.1",5402)
+Print("TEST While")
+Print("TEST Variable Assignment")
+var rudder -> sim("/controls/flight/rudder")
+var heading <- sim("/instrumentation/heading-indicator/offset-deg")
+var aileron -> sim("/controls/flight/aileron")
+var elevator -> sim("/controls/flight/elevator")
+var pitch <- sim("/instrumentation/attitude-indicator/internal-pitch-deg")
+var alt <- sim("/instrumentation/altimeter/indicated-altitude-ft")
+var roll <- sim("/instrumentation/attitude-indicator/indicated-roll-deg")
+var throttle -> sim("/controls/engines/current-engine/throttle")
+var breaks -> sim("/controls/flight/speedbrake")
+Sleep(1000)
+var h0 = heading
+breaks = 0
+Print("throttle should be one")
+throttle = 1
+Print(throttle)
+while alt < 1000 {
+	Print(alt)
+	rudder = (h0 - (heading))/80
+	aileron = -(roll) / 70
+	elevator = pitch / 50
+	Sleep(250)
+}
+Print("done")

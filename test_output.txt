@@ -1,0 +1,51 @@
+##### TESTING: [92mtest/test-if.txt[0m ######
+TEST If
+Yup rudder is greater than 4
+Done
+Done
+
+##### TESTING: [92mtest/test-client-server.txt[0m ######
+TEST client server
+done
+done
+
+##### TESTING: [92mtest/test-expr.txt[0m ######
+TEST expression
+expression
+0.000000
+0.000000
+20.000000
+Rudder should be -0.5 I think
+-0.512500
+Done
+
+##### TESTING: [92mtest/test-func.txt[0m ######
+[1;31mFAILED[0m
+
+##### TESTING: [92mtest/test-print.txt[0m ######
+TEST - Im a print function
+I like to print
+0.000000
+Done
+Done
+
+##### TESTING: [92mtest/test-sleep.txt[0m ######
+Test Going to sleep
+Done
+Done
+
+##### TESTING: [92mtest/test-while.txt[0m ######
+TEST While
+TEST Variable Assignment
+throttle should be one
+1.000000
+0.000000
+0.000000
+0.000000
+100.000000
+300.000000
+600.000000
+800.000000
+done
+done
+

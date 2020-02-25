@@ -80,3 +80,39 @@ run_simulator:
 run_simulator_mini:
 	@$(FG) $(FG_ARGS) $(FG_ARGS_MINI)
 
+
+# Test ######################################################################################
+PYTHON= 		/usr/bin/python3
+TEST_FOLDER= 	test
+SERVER_FILE= 	$(TEST_FOLDER)/fake_server.py
+TEST_FILES= 	\
+				test-if.txt 			\
+				 test-client-server.txt	\
+				 test-expr.txt 			\
+				 test-func.txt			\
+				 test-print.txt 		\
+				 test-sleep.txt 		\
+				 test-while.txt			\
+
+ifndef TEST_FILE
+TEST_FILE= $(TEST_FOLDER)/test-client-server.txt
+endif
+TEST_OUTPUT_FILE=	test_output.txt
+
+.PHONY: test_server
+test_server:
+	@$(PYTHON) $(SERVER_FILE) >/dev/null
+
+.PHONY: .test_single_file
+.test_single_file:
+	@echo "##### TESTING: \033[92m$(TEST_FILE)\033[0m ######"
+	-@$(MAKE) -s test_server & \
+	$(MAKE) -s main file=$(TEST_FILE) || { echo "\033[1;31mFAILED\033[0m";}
+	@echo ""
+
+.PHONY: test
+test:
+	@for testfile in $(TEST_FILES); do 									\
+	$(MAKE) -s .test_single_file TEST_FILE=$(TEST_FOLDER)/$$testfile ;	\
+	sleep 4; 															\
+	done | tee $(TEST_OUTPUT_FILE)

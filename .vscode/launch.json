@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/main.out",
             "args": [
-                "fly.txt"
+                "test/test-client-server.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",

@@ -1,0 +1,10 @@
+openDataServer(5400)
+connectControlClient("127.0.0.1",5402)
+var throttle -> sim("/controls/engines/current-engine/throttle")
+Print("TEST If")
+Sleep(1000)
+throttle = 5
+if throttle > 4 {
+	Print("Yup rudder is greater than 4")
+}
+Print("Done")
